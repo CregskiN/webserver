@@ -2,7 +2,7 @@
  * @Author: CregskiN 
  * @Date: 2019-11-24 22:45:41 
  * @Last Modified by: CregskiN
- * @Last Modified time: 2019-11-25 21:25:00
+ * @Last Modified time: 2019-11-27 10:11:22
  */
 
 // 导入： 模块
@@ -10,7 +10,7 @@ const http = require('http');
 const serverHandle = require('../app');
 
 // 导入： 默认配置
-const config = require('../config/defaultConfig');
+const config = require('../src/config/defaultConfig');
 
 
 

@@ -2,28 +2,28 @@
  * @Author: CregskiN 
  * @Date: 2019-11-25 08:06:35 
  * @Last Modified by: CregskiN
- * @Last Modified time: 2019-11-25 22:16:38
+ * @Last Modified time: 2019-11-26 21:27:05
  */
+
+const {
+    exec
+} = require('../db/mysql'); // 导入：执行语句的 promise 壳
+
 
 
 // '/api/blog/list' 博客列表
 const getList = (author, keyword) => {
-    // 先返回假数据
-    return [{
-            id: 1,
-            title: '标题A',
-            content: '内容A',
-            createTime: 1546610491112,
-            author: 'zhangsan'
-        },
-        {
-            id: 2,
-            title: '标题B',
-            content: '内容B',
-            createTime: 1546610491113,
-            author: 'lisi'
-        }
-    ]
+    // 组装mysql语句
+    let sql = `select * from blogs where 1=1 `; // 常规操作where 1=1
+    if (author) {
+        sql += `and author='${author}' `;
+    }
+    if (keyword) {
+        sql += `and title like '%${keyword}%' `;
+    }
+    sql += `order by createtime desc;`;
+    // 返回完整的promise
+    return exec(sql);
 }
 
 // '/api/blog/detail' 博客详情

@@ -2,7 +2,7 @@
  * @Author: CregskiN 
  * @Date: 2019-11-24 22:24:58 
  * @Last Modified by: CregskiN
- * @Last Modified time: 2019-11-25 22:43:06
+ * @Last Modified time: 2019-11-26 22:27:47
  */
 
 const {
@@ -26,9 +26,11 @@ const handleBlogRouter = (req, res) => {
     if (method === 'GET' & req.path === '/api/blog/list') {
         const author = req.query.author || '';
         const keyword = req.query.keyword || '';
-        const listData = getList(author, keyword);
 
-        return new SuccessModel(listData);
+        const result = getList(author, keyword);
+        return result.then(listData => {
+            return new SuccessModel(listData);
+        })
     }
 
     // 获取博客 详情
@@ -62,7 +64,7 @@ const handleBlogRouter = (req, res) => {
     if (method === 'POST' & req.path === '/api/blog/del') {
         const id = req.query.id;
         const result = delBlog(id);
-        if(result) {
+        if (result) {
             return new SuccessModel();
         } else {
             return new ErrorModel('删除博客失败!');
