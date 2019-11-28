@@ -1,0 +1,6 @@
+# mysql配置文件
+node_modules
+
+# .idea
+.idea
+/src/config/*
