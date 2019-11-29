@@ -23,8 +23,18 @@ const handleBlogRouter = (req, res) => {
 
     // 获取博客 列表
     if (method === 'GET' && req.path === '/api/blog/list') {
-        const author = req.query.author || '';
+        let author = req.query.author || '';
         const keyword = req.query.keyword || '';
+
+        if (req.query.isadmin) {
+            const loginCheckResult = loginCheck(req);
+            if(loginCheckResult) {
+                // 未登录
+                return loginCheckResult;
+            }
+            // 强制查询自己的博客
+            author = req.session.username;
+        }
 
         const result = getList(author, keyword);
         return result.then(listData => {
@@ -45,6 +55,7 @@ const handleBlogRouter = (req, res) => {
     // 新增博客
     if (method === 'POST' && req.path === '/api/blog/new') {
         const loginCheckResult = _loginCheck(req);
+        // 未登录
         if (loginCheckResult){
             return loginCheckResult;
         }
