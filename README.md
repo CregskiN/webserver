@@ -7,7 +7,13 @@
 + 管理中心
   + 新建页
   + 编辑页
-
+---
+## 博客系统说明
++ 登录系统
+    + cookie + session 方案
++ 日志系统
++ 安全系统
+---
 
 ## 接口说明
 > http://127.0.0.1/api/blog/list?keyword=String&author=String # 获取博客列表

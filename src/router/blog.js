@@ -27,7 +27,7 @@ const handleBlogRouter = (req, res) => {
         const keyword = req.query.keyword || '';
 
         if (req.query.isadmin) {
-            const loginCheckResult = loginCheck(req);
+            const loginCheckResult = _loginCheck(req);
             if(loginCheckResult) {
                 // 未登录
                 return loginCheckResult;
