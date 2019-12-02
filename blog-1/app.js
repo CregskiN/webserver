@@ -4,7 +4,7 @@
  * @Last Modified by: CregskiN
  * @Last Modified time: 2019-11-27 08:42:43
  */
-
+const {access} = require('./src/utils/log');
 const handleBlogRouter = require('./src/router/blog');
 const handleUserRouter = require('./src/router/user');
 const querystring = require('querystring');
@@ -43,6 +43,8 @@ const _getPostData = (req) => {
 
 
 const serverHandle = (req, res) => {
+    // 记录 access log
+    access(`${req.method} -- ${req.url} -- ${req.headers['user-agent']} -- ${Date.now()}`);
 
     // 设置：返回格式 JSON
     res.setHeader('Content-type', 'application/json');
@@ -73,7 +75,7 @@ const serverHandle = (req, res) => {
             blogResult.then(blogData => {
                 console.log('返回的数据');
                 console.log(blogData);
-                
+
                 res.end(
                     JSON.stringify(blogData)
                 );
@@ -102,7 +104,6 @@ const serverHandle = (req, res) => {
         res.end();
     });
 };
-
 
 
 module.exports = serverHandle;
