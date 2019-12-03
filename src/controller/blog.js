@@ -1,16 +1,16 @@
 
-const {
-    exec
-} = require('../db/mysql'); // 导入：执行语句的 promise 壳
+const {exec, escape} = require('../db/mysql'); // 导入：执行语句的 promise 壳
 
 
 // '/api/blog/list' 博客列表
 const getList = (author, keyword) => {
     let sql = `select * from blogs where 1=1 `; // 常规操作where 1=1
     if (author) {
+        author = escape(author);
         sql += `and author='${author}' `;
     }
     if (keyword) {
+        keyword = escape(keyword);
         sql += `and title like '%${keyword}%' `;
     }
     sql += `order by createtime desc;`;
@@ -23,6 +23,7 @@ const getList = (author, keyword) => {
 
 // '/api/blog/detail' 博客详情
 const getDetail = (id) => {
+    id = escape(id);
     const sql = `select * from blogs where id=${id};`;
 
     return exec(sql).then(detailDataRows => { // 以数组对象形式返回，需要选中返回第一个[0]
@@ -35,10 +36,11 @@ const getDetail = (id) => {
 // PS: 需要接收数据，1.组成核心resData 2.传递到数据库
 const newBlog = (blogData = {}) => {
     // blogData={} 为es6语法 接受一个对象 包含title content
-    const title = blogData.title;
-    const content = blogData.content;
-    const author = blogData.author;
+    const title = escape(blogData.title);
+    const content = escape(blogData.content);
+    const author = escape(blogData.author);
     const createTime = Date.now();
+
     const sql = `insert into blogs (title, content, author, createtime) values('${title}', '${content}', '${author}', ${createTime}); `;
 
     return exec(sql).then(insertData => {
@@ -53,8 +55,8 @@ const newBlog = (blogData = {}) => {
 const updateBlog = (id, blogData = {}) => {
     // id: 要更新博客的id
     // blogData: 新的博客内容 包含title content
-    const title = blogData.title;
-    const content = blogData.content;
+    const title = escape(blogData.title);
+    const content = escape(blogData.content);
 
     const sql = `update blogs set title='${title}', content='${content}' where id=${id}; `;
     return exec(sql).then(updataData => {
@@ -71,6 +73,7 @@ const updateBlog = (id, blogData = {}) => {
 // '/api/blog/del' 删除博客
 const delBlog = (id, author) => {
     // id: 要删除博客的id'
+    author = escape(author);
     const sql = `delete from blogs where id='${id}' and author='${author}'; `;
     return exec(sql).then(delData => {
         // console.log('删除博客操作数据库返回结果为：', delData);
