@@ -13,8 +13,9 @@
     + cookie + session 方案
 + 日志系统
 + 安全系统
-    + 防sql注入攻击
-    + 防xss攻击
+    + 防sql注入攻击 # mysql.escape
+    + 防xss攻击 # xss模块
+    + 数据库密码加密 # cryp模块
 ---
 
 ## 接口说明

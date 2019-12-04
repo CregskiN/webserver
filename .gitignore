@@ -1,9 +1,8 @@
-# mysql配置文件
-node_modules
+# 配置文件
+/src/config/*
 
 # .idea
 .idea
-/src/config/*
 
 # Logs
 logs

@@ -11,7 +11,7 @@ const handleUserRouter = (req, res) => {
         const {username, password} = req.body;
         const result = login(username, password);
         return result.then(loginData => {
-            console.log(loginData);
+
             if (loginData.username) {
                 // 设置 session
                 req.session.username = loginData.username;
