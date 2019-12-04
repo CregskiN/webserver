@@ -4,11 +4,8 @@
  * @Last Modified by: CregskiN
  * @Last Modified time: 2019-11-27 10:28:02
  */
-
 const mysql = require('mysql');
-const {
-    MYSQL_CONF
-} = require(('../config/db'));
+const {MYSQL_CONF} = require(('../config/db'));
 
 /*{
     host: 'localhost',

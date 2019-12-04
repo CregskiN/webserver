@@ -8,7 +8,7 @@
 const {exec, escape} = require('../db/mysql');
 
 const login = (username, password) => {
-    username = escape(escape); // 预防 注入sql攻击
+    username = escape(username); // 预防 注入sql攻击
     password = escape(password); //
 
     const sql = `select username,realname from users where username=${username} and password=${password}; `;
@@ -19,5 +19,5 @@ const login = (username, password) => {
 };
 
 module.exports = {
-    login,
+    login
 };

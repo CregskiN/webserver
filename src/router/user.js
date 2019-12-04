@@ -2,7 +2,6 @@ const {login} = require('../controller/user');
 const {SuccessModel, ErrorModel} = require('../module/resModule');
 const {set} = require('../db/redis');
 
-
 // 登录
 const handleUserRouter = (req, res) => {
     const method = req.method;
@@ -11,17 +10,16 @@ const handleUserRouter = (req, res) => {
     if (method === 'POST' && req.path === '/api/user/login') {
         const {username, password} = req.body;
         const result = login(username, password);
-
         return result.then(loginData => {
-            // console.log('登陆结果为：', loginData); // 在数据库查到了账号的loginData 派发一个cookie
+            console.log(loginData);
             if (loginData.username) {
                 // 设置 session
                 req.session.username = loginData.username;
                 req.session.realname = loginData.realname;
-                // 同步到redis
+                console.log("组装完的session为", req.session);
+                // 同步到 redis
                 set(req.sessionId, req.session);
-
-                return new SuccessModel();
+                return new SuccessModel('登录成功');
             }
             return new ErrorModel('登陆失败！');
         });
